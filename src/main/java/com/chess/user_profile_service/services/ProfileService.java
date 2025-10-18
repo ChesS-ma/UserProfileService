@@ -1,17 +1,28 @@
 package com.chess.user_profile_service.services;
 
+import com.chess.user_profile_service.dto.request.UpdateChessPreferencesRequest;
+import com.chess.user_profile_service.models.ChessPreferences;
 import com.chess.user_profile_service.models.UserProfile;
-
+import com.chess.user_profile_service.dto.request.UpdateProfileRequest ;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface UserProfileService {
+public interface ProfileService {
 
-    Optional<UserProfile> createProfile(String username , UUID user_id  , Integer birthYear );
+    UserProfile createProfile(String username , UUID user_id  , Integer birthYear );
 
-    void updateProfile(UserProfile userProfile) ;
+    Optional<UserProfile> findProfileById(UUID user_id) ;
 
-    void deleteProfile(UserProfile userProfile) ;
+    UserProfile updateProfile(UUID userId, UpdateProfileRequest request);
 
-    Optional<UserProfile> findProfile(UUID id );
+    UserProfile updateOnlineStatus(UUID userId , boolean isOnline );
+
+    void deleteProfile(UUID userId) ;
+
+    ////////// ChessPreferences Operations //////////
+
+    ChessPreferences updateChessPreferences(UUID userId , UpdateChessPreferencesRequest request ) ;
+
+    ChessPreferences getChessPreferences(UUID userId) ;
+
 }
