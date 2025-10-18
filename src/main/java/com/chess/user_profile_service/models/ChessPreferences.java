@@ -15,7 +15,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class ChessPreferences {
     @Id
-    @Column(name = "user_id")
     private UUID userId ;
 
     @OneToOne
