@@ -47,8 +47,8 @@ public class UserProfile {
     @Column(name = "updated_at")
     private Instant updatedAt ;
 
-    @Column(name = "birthday")
-    private Integer birthDay ;
+    @Column(name = "birthYear")
+    private Integer birthYear ;
 
 
     @Enumerated(EnumType.STRING)

@@ -1,24 +1,30 @@
 package com.chess.user_profile_service.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Entity
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ChessPreferences {
     @Id
-    @Column(name = "pref_id")
-    private UUID user_id ;
+    @Column(name = "user_id")
+    private UUID userId ;
 
     @OneToOne
     @MapsId
     @JoinColumn(name = "user_id")
-    private UserProfile user;
+    private UserProfile userProfile ;
 
     @Column(name = "board_theme")
-    private String BoardTheme = "Classic";
+    private String boardTheme = "Classic";
 
     @Column(name = "piece_set")
     private String pieceSet = "classic";
@@ -27,10 +33,10 @@ public class ChessPreferences {
     private boolean soundEnabled = true;
 
     @Column(name = "show_cordinates")
-    private boolean showCordinates = true;
+    private boolean showCoordinates = true;
 
     @Column(name = "auto_queen")
-    private boolean autoQueen = true;
+    private boolean autoQueen = false;
 
     @Column(name = "premove_enabled")
     private boolean premoveEnabled = false;
