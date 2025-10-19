@@ -37,7 +37,7 @@ public class UserProfile {
     private String countryCode; // For flag
 
     @Column(name = "is_online")
-    private boolean isOnline = false ;
+    private boolean isOnline ;
 
     @CreationTimestamp
     @Column(name = "created_at")
