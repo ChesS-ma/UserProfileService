@@ -1,0 +1,44 @@
+name: Java CI with Maven
+on:
+  push:
+    branches: [ "main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      mariadb:
+        image: mariadb:10.4
+        env:
+          MARIADB_ROOT_PASSWORD: root
+          MARIADB_DATABASE: testdb
+          # Map the container's 3306 port to the host runner's 3306 port
+        ports:
+          - 3306:3306
+          # Health check to ensure the database is ready before running tests
+        options: >-
+          --health-cmd "mysqladmin ping -h localhost -u root -proot"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - name: checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: 'temurin'
+          cache: 'maven'
+      - name: Build and test with Maven
+        run: mvn -B package --file pom.xml
+        env:
+          SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/testdb?useSSL=false
+          SPRING_DATASOURCE_USERNAME: root
+          SPRING_DATASOURCE_PASSWORD: root
+          # Create and drop the schema on every run
+          SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
